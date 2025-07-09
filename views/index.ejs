@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head><title>Stock</title></head>
+<body>
+  <h1>Insumos</h1>
+  <a href="/nuevo">Agregar insumo</a>
+  <ul>
+    <% insumos.forEach(insumo => { %>
+      <li><%= insumo.nombre %> - <%= insumo.cantidad %> unidades - <%= insumo.categoria %></li>
+    <% }); %>
+  </ul>
+</body>
+</html>
