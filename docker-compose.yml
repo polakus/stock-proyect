@@ -5,4 +5,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./db:/app/db
+      - .:/app         # Esto monta tu código fuente local
+      - ./db:/app/db   # Asegura persistencia de la base de datos
+    environment:
+      - NODE_ENV=development

@@ -37,4 +37,9 @@ app.post('/agregar', (req, res) => {
   );
 });
 
+app.post('/eliminar/:id', (req, res) => {
+  const { id } = req.params;
+  db.run("DELETE FROM insumos WHERE id = ?", [id], () => res.redirect('/'));
+});
+
 app.listen(3000, () => console.log('App corriendo en http://localhost:3000'));

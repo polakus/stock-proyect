@@ -4,10 +4,65 @@
 <body>
   <h1>Insumos</h1>
   <a href="/nuevo">Agregar insumo</a>
-  <ul>
-    <% insumos.forEach(insumo => { %>
-      <li><%= insumo.nombre %> - <%= insumo.cantidad %> unidades - <%= insumo.categoria %></li>
-    <% }); %>
-  </ul>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Cantidad</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% insumos.forEach(insumo => { %>
+        <tr>
+          <td><%= insumo.nombre %></td>
+          <td><%= insumo.categoria %></td>
+          <td><%= insumo.cantidad %></td>
+          <td>
+            <form action="/eliminar/<%= insumo.id %>" method="POST" style="display:inline;" onsubmit="return showConfirmDialog(event, <%= insumo.id %>)">
+              <button type="submit">Quitar</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  
+  <dialog id="confirmDialog">
+    <p>¿Estás seguro de eliminar este insumo?</p>
+    <menu>
+      <button id="cancelBtn" value="cancel">Cancelar</button>
+      <button id="confirmBtn" value="confirm">Eliminar</button>
+    </menu>
+  </dialog>
+<script>
+  let formToSubmit = null;
+
+  function showConfirmDialog(event, id) {
+    event.preventDefault();
+    formToSubmit = event.target;
+    const dialog = document.getElementById('confirmDialog');
+    dialog.showModal();
+
+    // Manejar el botón de confirmación
+    const confirmBtn = document.getElementById('confirmBtn');
+    confirmBtn.onclick = function() {
+      dialog.close();
+      formToSubmit.submit();
+    };
+    const cancelBtn = document.getElementById('cancelBtn');
+    cancelBtn.onclick = function() {
+      dialog.close();
+      formToSubmit = null;
+    };
+    // Si se cancela, simplemente cerrar el diálogo
+    dialog.addEventListener('close', function handler() {
+      dialog.removeEventListener('close', handler);
+      formToSubmit = null;
+    });
+
+    return false;
+  }
+</script>
 </body>
 </html>
