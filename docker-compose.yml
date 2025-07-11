@@ -6,6 +6,7 @@ services:
       - "3000:3000"
     volumes:
       - .:/app         # Esto monta tu código fuente local
+      - /app/node_modules    # <-- Esto evita que se sobrescriba node_modules
       - ./db:/app/db   # Asegura persistencia de la base de datos
     environment:
       - NODE_ENV=development
